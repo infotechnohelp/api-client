@@ -1,11 +1,17 @@
-var Api = function (apiRoot, csrfToken) {
+var Api = function (webroot, apiRoot, csrfToken) {
+    this.webroot = webroot;
     this.apiRoot = apiRoot;
     this.csrfToken = csrfToken;
+};
+
+Api.prototype.replaceApiRoot = function (apiRoot) {
+    this.apiRoot = apiRoot;
 };
 
 Api.prototype.sendRequest = function (method, url, data, dataType, successCallback, errorCallback) {
 
     var csrfToken = this.csrfToken;
+    var webroot = this.webroot;
     var apiRoot = this.apiRoot;
 
     $.ajax({
@@ -22,7 +28,7 @@ Api.prototype.sendRequest = function (method, url, data, dataType, successCallba
             response = (data === 'json') ? JSON.parse(data.responseText) : data.responseText;
             errorCallback(response, textStatus, errorThrown);
         },
-        type: method, url: apiRoot + url
+        type: method, url: webroot + apiRoot + url
     });
 };
 
