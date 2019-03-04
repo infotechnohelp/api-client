@@ -8,11 +8,14 @@ Api.prototype.replaceApiRoot = function (apiRoot) {
     this.apiRoot = apiRoot;
 };
 
-Api.prototype.sendRequest = function (method, url, data, dataType, successCallback, errorCallback) {
+Api.prototype.sendRequest = function (apiRoot, method, url, data, dataType, successCallback, errorCallback) {
 
     var csrfToken = this.csrfToken;
     var webroot = this.webroot;
-    var apiRoot = this.apiRoot;
+
+    if(apiRoot === undefined || apiRoot === null){
+        var apiRoot = this.apiRoot;
+    }
 
     $.ajax({
         async: true,
@@ -32,10 +35,10 @@ Api.prototype.sendRequest = function (method, url, data, dataType, successCallba
     });
 };
 
-Api.prototype.getJson = function (url, successCallback, errorCallback) {
-    this.sendRequest('get', url, null, 'json', successCallback, errorCallback);
+Api.prototype.getJson = function (url, successCallback, errorCallback, apiRoot) {
+    this.sendRequest(apiRoot, 'get', url, null, 'json', successCallback, errorCallback);
 };
 
-Api.prototype.postJson = function (url, data, successCallback, errorCallback) {
-    this.sendRequest('post', url, data, 'json', successCallback, errorCallback);
+Api.prototype.postJson = function (url, data, successCallback, errorCallback, apiRoot) {
+    this.sendRequest(apiRoot, 'post', url, data, 'json', successCallback, errorCallback);
 };
