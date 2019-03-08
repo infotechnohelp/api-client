@@ -13,8 +13,8 @@ Api.prototype.sendRequest = function (apiRoot, method, url, data, dataType, succ
     var csrfToken = this.csrfToken;
     var webroot = this.webroot;
 
-    if(apiRoot === undefined || apiRoot === null){
-        var apiRoot = this.apiRoot;
+    if (apiRoot === undefined || apiRoot === null) {
+        apiRoot = this.apiRoot;
     }
 
     $.ajax({
@@ -25,11 +25,16 @@ Api.prototype.sendRequest = function (apiRoot, method, url, data, dataType, succ
             xhr.setRequestHeader('X-CSRF-Token', csrfToken);
         },
         success: function (data, textStatus) {
-            successCallback(data, textStatus);
+            if (successCallback !== undefined) {
+                successCallback(data, textStatus);
+            }
         },
         error: function (data, textStatus, errorThrown) {
             response = (data === 'json') ? JSON.parse(data.responseText) : data.responseText;
-            errorCallback(response, textStatus, errorThrown);
+
+            if (errorCallback !== undefined) {
+                errorCallback(response, textStatus, errorThrown);
+            }
         },
         type: method, url: webroot + apiRoot + url
     });
@@ -41,4 +46,8 @@ Api.prototype.getJson = function (url, successCallback, errorCallback, apiRoot) 
 
 Api.prototype.postJson = function (url, data, successCallback, errorCallback, apiRoot) {
     this.sendRequest(apiRoot, 'post', url, data, 'json', successCallback, errorCallback);
+};
+
+Api.prototype.clone = function () {
+    return new Api(this.webroot, this.apiRoot, this.csrfToken);
 };
