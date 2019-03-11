@@ -4,7 +4,7 @@ var Api = function (webroot, apiRoot, csrfToken) {
     this.csrfToken = csrfToken;
 };
 
-Api.prototype.replaceApiRoot = function (apiRoot) {
+Api.prototype.setApiRoot = function (apiRoot) {
     this.apiRoot = apiRoot;
 };
 
