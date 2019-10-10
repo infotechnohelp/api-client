@@ -45,3 +45,5 @@ var newApi = api.clone();
         trackerApi.setApiRoot("any/api/path");
 ```
 \</script>
+
+apiRoot can be passed as a clone() parameter
