@@ -48,6 +48,8 @@ Api.prototype.postJson = function (url, data, successCallback, errorCallback, ap
     this.sendRequest(apiRoot, 'post', url, data, 'json', successCallback, errorCallback);
 };
 
-Api.prototype.clone = function () {
-    return new Api(this.webroot, this.apiRoot, this.csrfToken);
+Api.prototype.clone = function (apiRoot) {
+    var actualApiRoot = (apiRoot === undefined) ? this.apiRoot : apiRoot;
+
+    return new Api(this.webroot, actualApiRoot, this.csrfToken);
 };
