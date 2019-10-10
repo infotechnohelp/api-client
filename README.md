@@ -42,8 +42,15 @@
 \<script>
 ```js
 var newApi = api.clone();
-        trackerApi.setApiRoot("any/api/path");
+        newApi.setApiRoot("any/api/path");
+        // newApi.apiRoot("any/api/path");
 ```
 \</script>
 
 apiRoot can be passed as a clone() parameter
+
+\<script>
+```js
+var newApi = api.clone("any/api/path");
+```
+\</script>
